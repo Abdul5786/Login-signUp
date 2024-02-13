@@ -33,13 +33,10 @@ public class AuthController
        {
            this.doAuthenticate(request.getEmail(), request.getPassword()); // used authenticate
            UserDetails userDetails = userDetailsService.loadUserByUsername(request.getEmail());
-           if(userDetails.isEnabled())
-           {
+
                String token = this.jwtHelper.generateToken(userDetails);
                JwtResponse response = JwtResponse.builder().jwtToken(token).username(userDetails.getUsername()).build();
                return new ResponseEntity<>(response, HttpStatus.OK);
-           }
-           return null;
        }
 
 
